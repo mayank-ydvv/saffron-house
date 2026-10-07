@@ -47,7 +47,7 @@ const words = hero.headline.split(' ');
 
   <div class="wrap pb-[12svh]">
     <p class="hero-fade eyebrow" style="--i:0">{site.address.locality} · {site.address.city}</p>
-    <h1 id="hero-title" class="mt-5 max-w-[14ch] text-hero text-cream xl:text-[7.5rem]" aria-label={hero.headline}>
+    <h1 id="hero-title" class="mt-5 max-w-[7em] text-hero text-cream xl:text-[7.5rem]" aria-label={hero.headline}>
       {
         words.map((word, i) => (
           <>
@@ -61,7 +61,8 @@ const words = hero.headline.split(' ');
       }
     </h1>
     <p class="hero-fade mt-6 max-w-xl text-lg text-cream/85" style="--i:5">{hero.subtext}</p>
-    <div class="hero-fade mt-10 flex flex-wrap gap-4" style="--i:6">
+    <!-- Stacked on phones: a one-row fit would depend on font metrics and could shift when Inter loads. -->
+    <div class="hero-fade mt-10 flex flex-col items-start gap-4 sm:flex-row" style="--i:6">
       <Button href="/reserve">Reserve a Table</Button>
       <Button href="/menu" variant="outline">View Menu</Button>
     </div>

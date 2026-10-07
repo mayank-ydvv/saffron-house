@@ -12,8 +12,8 @@
   --color-transparent: transparent;
 
   --font-*: initial;
-  --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Cormorant Fallback', 'Cormorant Fallback TNR', Georgia, serif;
+  --font-body: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-sm: 40rem;
@@ -31,6 +31,38 @@
   --text-title--line-height: 1.15;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+ * Metric-matched fallbacks: local fonts resized to the web fonts' width, ascent and descent,
+ * so the swap to the real font doesn't reflow text (keeps CLS at zero).
+ */
+@font-face {
+  font-family: 'Cormorant Fallback';
+  src: local('Georgia');
+  size-adjust: 87.89%;
+  ascent-override: 105.13%;
+  descent-override: 32.65%;
+  line-gap-override: 0%;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Fallback TNR';
+  src: local('Times New Roman');
+  size-adjust: 95.88%;
+  ascent-override: 96.37%;
+  descent-override: 29.93%;
+  line-gap-override: 0%;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 106.86%;
+  ascent-override: 90.65%;
+  descent-override: 22.66%;
+  line-gap-override: 0%;
+  font-display: swap;
 }
 
 /* ---------- Base ---------- */
