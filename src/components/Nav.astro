@@ -1,0 +1,97 @@
+---
+import Menu from '@lucide/astro/icons/menu';
+import X from '@lucide/astro/icons/x';
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => href === path;
+---
+
+<header id="site-header" class="group fixed inset-x-0 top-0 z-50">
+  <span
+    class="absolute inset-0 -z-10 border-b border-brass/20 bg-char/85 opacity-0 backdrop-blur-md transition-opacity duration-500 group-data-solid:opacity-100"
+    aria-hidden="true"></span>
+  <div class="wrap flex h-16 items-center justify-between gap-6 lg:h-20">
+    <Logo />
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-10">
+        {
+          site.nav.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-section={link.section}
+                aria-current={isCurrent(link.href) ? 'page' : undefined}
+                class="nav-link relative inline-flex min-h-11 items-center text-sm tracking-[0.14em] text-cream/85 uppercase hover:text-cream aria-[current]:text-saffron"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/reserve" class="btn btn-primary hidden min-h-11 px-5 py-2.5 sm:inline-flex">Reserve</a>
+      <button
+        id="menu-open"
+        type="button"
+        class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-cream lg:hidden"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Menu size={24} stroke-width={1.5} aria-hidden="true" />
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog
+  id="mobile-menu"
+  aria-label="Site menu"
+  class="menu-dialog m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto bg-ink p-0 text-cream backdrop:bg-ink"
+>
+  <div class="wrap flex h-16 items-center justify-between">
+    <Logo />
+    <button
+      type="button"
+      data-close
+      class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-cream"
+    >
+      <X size={24} stroke-width={1.5} aria-hidden="true" />
+      <span class="sr-only">Close menu</span>
+    </button>
+  </div>
+  <nav aria-label="Mobile" class="wrap flex min-h-[calc(100dvh-4rem)] flex-col justify-center gap-10 pb-16">
+    <ul class="flex flex-col gap-2">
+      {
+        site.nav.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              aria-current={isCurrent(link.href) ? 'page' : undefined}
+              class="inline-flex min-h-14 items-center font-display text-5xl text-cream hover:text-saffron aria-[current]:text-saffron"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex flex-col gap-6">
+      <a href="/reserve" class="btn btn-primary self-start">Reserve a Table</a>
+      <p class="text-sm text-muted">
+        {site.hours[1]?.days} · {site.hours[1]?.time}<br />{site.phone}
+      </p>
+    </div>
+  </nav>
+</dialog>
+
+<script>
+  import '../scripts/nav';
+</script>

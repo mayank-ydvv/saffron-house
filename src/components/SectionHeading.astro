@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  /** Heading level; defaults to h2. */
+  level?: 1 | 2;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const { id, eyebrow, title, level = 2, align = 'left', class: className } = Astro.props;
+const Tag = `h${level}` as const;
+---
+
+<header class:list={['reveal', align === 'center' && 'mx-auto text-center', className]}>
+  <p class="eyebrow">{eyebrow}</p>
+  <span class:list={['rule mt-4', align === 'center' && 'mx-auto']} aria-hidden="true"></span>
+  <Tag id={id} class="mt-6 text-display text-cream">{title}</Tag>
+  <slot />
+</header>

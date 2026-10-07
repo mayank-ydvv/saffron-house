@@ -1,0 +1,25 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<a href="/" class:list={['inline-flex min-h-11 items-center gap-2.5 text-cream', className]}>
+  <svg class="h-6 w-6 shrink-0" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="var(--color-saffron)" stroke-width="2" stroke-linecap="round">
+      <path d="M16 30V9"></path>
+      <path d="M16 30C16 21 13.5 13 8.5 6.5"></path>
+      <path d="M16 30c0-9 2.5-17 7.5-23.5"></path>
+    </g>
+    <g fill="var(--color-saffron)">
+      <path d="M14 9.2 16 3l2 6.2z"></path>
+      <path d="m6.2 8 1.4-6.4 3.2 4.8z"></path>
+      <path d="m21.2 6.4 3.2-4.8L25.8 8z"></path>
+    </g>
+  </svg>
+  <span class="font-display text-lg leading-none font-semibold tracking-[0.3em] whitespace-nowrap">
+    SAFFRON HOUSE
+  </span>
+  <span class="sr-only">— home</span>
+</a>

@@ -1,0 +1,85 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const links = [{ label: 'Reserve', href: '/reserve' }, ...site.nav];
+
+// Brand marks aren't in Lucide; minimal stroke paths in the same visual language.
+const socialPaths: Record<(typeof site.social)[number]['icon'], string> = {
+  instagram: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM17.5 6.5h.01',
+  facebook: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z',
+  x: 'M4 4l11.7 16H20L8.3 4zM4 20l6.8-6.8M13.2 10.8 20 4',
+};
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-brass/20 bg-char">
+  <div class="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1.2fr] lg:py-20">
+    <div class="flex flex-col gap-5">
+      <Logo />
+      <p class="max-w-xs text-muted">{site.tagline} Dinner, Tuesday to Sunday, in {site.address.locality}, {site.address.city}.</p>
+      <ul class="-ml-3 flex gap-1" aria-label="Social media">
+        {
+          site.social.map((s) => (
+            <li>
+              <a href={s.href} class="inline-flex h-11 w-11 items-center justify-center text-brass hover:text-saffron">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={socialPaths[s.icon]} />
+                </svg>
+                <span class="sr-only">{s.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <nav aria-label="Footer">
+      <p class="eyebrow">Explore</p>
+      <ul class="mt-4 grid grid-cols-2 gap-x-6 lg:grid-cols-1">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} class="inline-flex min-h-11 items-center text-cream/85 hover:text-saffron">{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="md:col-span-2 lg:col-span-1">
+      <p class="eyebrow" id="newsletter-title">The seasonal letter</p>
+      <p class="mt-4 text-muted">A short note when the menu turns. Four times a year, never more.</p>
+      <form id="newsletter" class="mt-6" method="post" aria-labelledby="newsletter-title">
+        <label for="newsletter-email" class="sr-only">Email address</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            placeholder="you@example.com"
+            aria-describedby="newsletter-msg"
+            class="field sm:flex-1"
+          />
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </div>
+        <p id="newsletter-msg" class="mt-3 min-h-6 text-sm text-muted" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="border-t border-brass/15">
+    <div class="wrap flex flex-col gap-2 py-6 text-sm text-muted md:flex-row md:items-center md:justify-between">
+      <p>© {year} {site.name}. Concept project — not a real restaurant.</p>
+      <p>
+        Designed &amp; built by <a href={site.credit.href} class="link">{site.credit.name}</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import '../scripts/newsletter';
+</script>
