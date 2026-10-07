@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import MenuItem from '../components/MenuItem.astro';
+import Button from '../components/Button.astro';
+import Wine from '@lucide/astro/icons/wine';
+import { site } from '../data/site';
+import { byCategory, tasting } from '../lib/data';
+import { DIET_BITS, DIET_LABELS } from '../lib/diet';
+import { formatPrice } from '../lib/format';
+import type { Category, TabId } from '../types';
+
+const TABS: { id: TabId; label: string; sections: { category: Category; title: string }[] }[] = [
+  { id: 'tasting', label: 'Tasting Menu', sections: [] },
+  {
+    id: 'a-la-carte',
+    label: 'À la carte',
+    sections: [
+      { category: 'starters', title: 'Starters' },
+      { category: 'mains', title: 'Mains' },
+      { category: 'breads', title: 'Breads' },
+    ],
+  },
+  { id: 'desserts', label: 'Desserts', sections: [{ category: 'desserts', title: 'Desserts' }] },
+  { id: 'drinks', label: 'Drinks', sections: [{ category: 'drinks', title: 'Cocktails & alcohol-free' }] },
+];
+const DEFAULT_TAB: TabId = 'tasting';
+const diets = (['veg', 'vegan', 'gf'] as const).map((d) => ({ bit: DIET_BITS[d], label: DIET_LABELS[d] }));
+const spiceOptions = [
+  { value: 3, label: 'Any heat' },
+  { value: 2, label: 'Up to medium' },
+  { value: 1, label: 'Mild only' },
+  { value: 0, label: 'No heat' },
+];
+---
+
+<Base
+  title="Menu"
+  description="The Saffron House menu: a seven-course tasting journey and à la carte dishes from Awadh, Chettinad, Kashmir and the Konkan coast. Vegetarian, vegan and gluten-free options."
+>
+  <div data-menu data-default-tab={DEFAULT_TAB}>
+    <header class="wrap pt-32 pb-12 sm:pt-40">
+      <p class="eyebrow">The menu</p>
+      <span class="rule mt-4" aria-hidden="true"></span>
+      <h1 class="mt-6 text-display text-cream">Dinner at Saffron House.</h1>
+      <p class="mt-4 max-w-xl text-lg text-muted">
+        Four regions, one kitchen. The tasting menu is the fullest expression of what we do. The à la carte is for
+        evenings that call for something simpler.
+      </p>
+    </header>
+
+    <div class="sticky top-16 z-30 border-y border-brass/20 bg-ink/90 backdrop-blur-md lg:top-20">
+      <div class="wrap">
+        <div role="tablist" aria-label="Menu sections" data-tablist class="tablist -mx-4 flex overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          {
+            TABS.map((tab) => {
+              const selected = tab.id === DEFAULT_TAB;
+              return (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`tab-${tab.id}`}
+                  data-tab={tab.id}
+                  aria-controls={`panel-${tab.id}`}
+                  aria-selected={selected ? 'true' : 'false'}
+                  tabindex={selected ? 0 : -1}
+                  class="tab relative min-h-14 shrink-0 px-4 text-sm tracking-[0.14em] whitespace-nowrap text-cream/75 uppercase first:pl-0 hover:text-cream"
+                >
+                  {tab.label}
+                </button>
+              );
+            })
+          }
+        </div>
+        <div data-filters hidden class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-brass/15 py-3">
+          <div role="group" aria-label="Dietary filters" class="flex flex-wrap gap-2">
+            {
+              diets.map((d) => (
+                <button
+                  type="button"
+                  data-diet={d.bit}
+                  aria-pressed="false"
+                  class="chip min-h-11 rounded-full border border-brass/40 px-4 text-sm text-cream/85 hover:border-saffron"
+                >
+                  {d.label}
+                </button>
+              ))
+            }
+          </div>
+          <label class="flex items-center gap-3 text-sm text-muted">
+            Spice
+            <select data-spice-max class="field min-h-11 w-auto py-2 text-sm">
+              {spiceOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+          <p class="ml-auto text-sm text-muted" aria-live="polite"><span data-count></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap scroll-mt-40 pt-12 pb-24" data-panels>
+      <section
+        id="panel-tasting"
+        role="tabpanel"
+        aria-labelledby="tab-tasting"
+        tabindex="0"
+        data-panel="tasting"
+        data-active
+        class="panel grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24"
+      >
+        <div class="lg:sticky lg:top-52 lg:self-start">
+          <h2 class="font-display text-title text-cream">The tasting journey</h2>
+          <p class="mt-4 text-muted">
+            Seven courses, served to the whole table. About two and a half hours. We will happily adapt for vegetarian
+            guests or allergies with a day’s notice.
+          </p>
+          <dl class="mt-8 grid grid-cols-2 border-y border-brass/25">
+            <div class="py-5 pr-4">
+              <dt class="text-sm text-muted">Per guest</dt>
+              <dd class="mt-1 font-display text-3xl text-cream lining-nums">{formatPrice(site.tasting.price)}</dd>
+            </div>
+            <div class="border-l border-brass/25 py-5 pl-6">
+              <dt class="text-sm text-muted">With wine pairing</dt>
+              <dd class="mt-1 font-display text-3xl text-cream lining-nums">{formatPrice(site.tasting.pairingPrice)}</dd>
+            </div>
+          </dl>
+          <Button href="/reserve" class="mt-8">Reserve the tasting</Button>
+        </div>
+        <ol>
+          {
+            tasting.map((course) => (
+              <li class="grid grid-cols-[3rem_1fr] border-b border-brass/15 py-7 first:pt-0">
+                <span class="font-display text-2xl text-saffron lining-nums" aria-hidden="true">
+                  {String(course.number).padStart(2, '0')}
+                </span>
+                <div>
+                  <p class="eyebrow">
+                    <span class="sr-only">Course {course.number}: </span>
+                    {course.name}
+                  </p>
+                  <h3 class="mt-2 font-display text-[1.625rem] leading-tight text-cream">{course.dish}</h3>
+                  <p class="mt-2 text-muted">{course.ingredients}</p>
+                  <p class="mt-3 inline-flex items-center gap-2 text-sm text-cream/80">
+                    <Wine size={16} stroke-width={1.5} class="text-brass" aria-hidden="true" />
+                    <span class="sr-only">Pairing:</span>
+                    {course.pairing}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      {
+        TABS.filter((t) => t.sections.length).map((tab) => (
+          <section
+            id={`panel-${tab.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${tab.id}`}
+            tabindex="0"
+            data-panel={tab.id}
+            class="panel"
+          >
+            {tab.sections.map(({ category, title }) => (
+              <div data-section={category} id={`section-${category}`} class="scroll-mt-48 not-first:mt-16">
+                <h2 class="eyebrow text-[0.8125rem]">{title}</h2>
+                <ul class="mt-2 grid gap-x-16 lg:grid-cols-2">
+                  {byCategory(category).map((item) => (
+                    <MenuItem item={item} />
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
+        ))
+      }
+
+      <div data-empty hidden class="py-20 text-center">
+        <p class="font-display text-title text-cream">Nothing on this page matches those filters.</p>
+        <p class="mt-3 text-muted">Try loosening one, or let us know your needs when you book. The kitchen is happy to adapt.</p>
+        <button type="button" data-action="clear" class="btn btn-outline mt-8">Clear filters</button>
+      </div>
+
+      <p class="mt-16 text-sm text-muted">
+        Prices in Indian rupees, exclusive of applicable taxes. Please tell us about allergies when you book. Menus change
+        with the season.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .tablist {
+    scrollbar-width: none;
+  }
+  .tab[aria-selected='true'] {
+    color: var(--color-saffron);
+  }
+  .tab::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-saffron);
+    transform: scaleX(0);
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .tab:first-child::after {
+    left: 0;
+  }
+  .tab[aria-selected='true']::after {
+    transform: scaleX(1);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--color-saffron);
+    border-color: var(--color-saffron);
+    color: var(--color-ink);
+  }
+  /* With JS, only the active panel shows; without JS every section stays readable. */
+  :global(.js) .panel:not([data-active]) {
+    display: none;
+  }
+</style>
+
+<script>
+  import '../scripts/menu-filter';
+</script>

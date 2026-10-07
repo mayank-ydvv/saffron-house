@@ -1,0 +1,193 @@
+---
+import Base from '../layouts/Base.astro';
+import { content } from '../data/content';
+import { site } from '../data/site';
+import { formatPrice, formatTime } from '../lib/format';
+import { timeSlots } from '../lib/slots';
+
+const { reserve } = content;
+// Generated once, at build time, from the slot config in site.ts.
+const slots = timeSlots(site.slots);
+const guests = Array.from({ length: site.maxGuests }, (_, i) => i + 1);
+const occasions = [
+  { value: 'none', label: 'No occasion' },
+  { value: 'birthday', label: 'Birthday' },
+  { value: 'anniversary', label: 'Anniversary' },
+  { value: 'business', label: 'Business' },
+  { value: 'other', label: 'Something else' },
+];
+const PHONE_PATTERN = String.raw`(?:\+91[\s\-]?)?[6-9]\d{4}[\s\-]?\d{5}`;
+const label = 'block text-sm font-medium text-cream';
+const hint = 'mt-1.5 text-sm text-muted';
+---
+
+<Base
+  title="Reserve a table"
+  description="Reserve a table at Saffron House, Nungambakkam, Chennai. Dinner Tuesday to Sunday, 7 PM to 11 PM. Seven-course tasting menu and à la carte."
+>
+  <div class="wrap pt-32 pb-24 sm:pt-40">
+    <header class="max-w-2xl">
+      <p class="eyebrow">{reserve.eyebrow}</p>
+      <span class="rule mt-4" aria-hidden="true"></span>
+      <h1 class="mt-6 text-display text-cream">{reserve.title}</h1>
+      <p class="mt-4 text-lg text-muted">{reserve.intro}</p>
+    </header>
+
+    <div class="mt-14 grid gap-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-20">
+      <div data-reserve-root>
+        <form
+          id="reserve-form"
+          class="grid gap-x-6 gap-y-7 sm:grid-cols-2"
+          method="post"
+          aria-describedby="form-note"
+          data-closed-days={site.slots.closedDays.join(',')}
+          data-window-days={site.bookingWindowDays}
+        >
+          <p id="form-note" class="text-sm text-muted sm:col-span-2">All fields are required unless marked optional.</p>
+
+          <div class="sm:col-span-2">
+            <label for="name" class={label}>Full name</label>
+            <input id="name" name="name" type="text" required minlength="2" maxlength="80" autocomplete="name" class="field mt-2" aria-describedby="name-error" />
+            <p id="name-error" class="field-error mt-1.5" data-error-for="name"></p>
+          </div>
+
+          <div>
+            <label for="email" class={label}>Email</label>
+            <input id="email" name="email" type="email" required maxlength="120" autocomplete="email" class="field mt-2" aria-describedby="email-error" />
+            <p id="email-error" class="field-error mt-1.5" data-error-for="email"></p>
+          </div>
+
+          <div>
+            <label for="phone" class={label}>Mobile number</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              inputmode="tel"
+              autocomplete="tel"
+              pattern={PHONE_PATTERN}
+              class="field mt-2"
+              aria-describedby="phone-hint phone-error"
+            />
+            <p id="phone-hint" class={hint}>Indian mobile, e.g. +91 98765 43210</p>
+            <p id="phone-error" class="field-error mt-1.5" data-error-for="phone"></p>
+          </div>
+
+          <div>
+            <label for="date" class={label}>Date</label>
+            <input id="date" name="date" type="date" required class="field mt-2" aria-describedby="date-hint date-error" />
+            <p id="date-hint" class={hint}>Tuesday to Sunday. We are closed on Mondays.</p>
+            <p id="date-error" class="field-error mt-1.5" data-error-for="date"></p>
+          </div>
+
+          <div>
+            <label for="time" class={label}>Time</label>
+            <select id="time" name="time" required class="field mt-2" aria-describedby="time-hint time-error">
+              <option value="">Choose a time</option>
+              {slots.map((slot) => <option value={slot}>{formatTime(slot)}</option>)}
+            </select>
+            <p id="time-hint" class={hint}>Last seating {formatTime(site.slots.close)}.</p>
+            <p id="time-error" class="field-error mt-1.5" data-error-for="time"></p>
+          </div>
+
+          <div>
+            <label for="guests" class={label}>Guests</label>
+            <select id="guests" name="guests" required class="field mt-2" aria-describedby="guests-error">
+              {guests.map((n) => <option value={n} selected={n === 2}>{n} {n === 1 ? 'guest' : 'guests'}</option>)}
+            </select>
+            <p id="guests-error" class="field-error mt-1.5" data-error-for="guests"></p>
+          </div>
+
+          <div>
+            <label for="occasion" class={label}>Occasion <span class="font-normal text-muted">(optional)</span></label>
+            <select id="occasion" name="occasion" class="field mt-2">
+              {occasions.map((o) => <option value={o.value}>{o.label}</option>)}
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <div class="flex items-baseline justify-between">
+              <label for="requests" class={label}>Special requests <span class="font-normal text-muted">(optional)</span></label>
+              <span class="text-sm text-muted tabular-nums" aria-hidden="true"><span data-char-count>0</span> / 300</span>
+            </div>
+            <textarea
+              id="requests"
+              name="requests"
+              rows="4"
+              maxlength="300"
+              class="field mt-2 resize-y"
+              aria-describedby="requests-hint"
+              placeholder="Allergies, accessibility needs, a quiet corner…"></textarea>
+            <p id="requests-hint" class="sr-only" aria-live="polite" data-char-live>Up to 300 characters.</p>
+          </div>
+
+          <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center">
+            <button type="submit" class="btn btn-primary disabled:cursor-wait disabled:opacity-70">Request reservation</button>
+            <p class="text-sm text-muted" data-form-status role="status"></p>
+          </div>
+        </form>
+
+        <section data-confirmation hidden aria-labelledby="confirm-title" class="border border-brass/30 bg-char p-8 sm:p-12">
+          <p class="eyebrow">Request received</p>
+          <h2 id="confirm-title" tabindex="-1" class="mt-4 font-display text-display text-cream outline-none">Your table awaits.</h2>
+          <p class="mt-4 text-muted" data-confirm-lead></p>
+          <dl class="mt-8 grid gap-x-8 gap-y-5 border-t border-brass/20 pt-8 sm:grid-cols-2" data-confirm-list></dl>
+          <p class="mt-8 text-sm text-muted">
+            This is a concept site, so no booking has been made and no email will be sent.
+          </p>
+          <a href="/" class="btn btn-outline mt-8">Back to home</a>
+        </section>
+      </div>
+
+      <aside class="flex flex-col gap-10 lg:border-l lg:border-brass/20 lg:pl-12" aria-label="Booking information">
+        <div>
+          <h2 class="eyebrow">The tasting menu</h2>
+          <dl class="mt-4 grid gap-3">
+            <div class="flex justify-between gap-4 border-b border-brass/15 pb-3">
+              <dt class="text-muted">Seven courses</dt>
+              <dd class="text-cream">{formatPrice(site.tasting.price)}</dd>
+            </div>
+            <div class="flex justify-between gap-4 border-b border-brass/15 pb-3">
+              <dt class="text-muted">With wine pairing</dt>
+              <dd class="text-cream">{formatPrice(site.tasting.pairingPrice)}</dd>
+            </div>
+          </dl>
+          <a href="/menu" class="link mt-4 inline-flex min-h-11 items-center text-sm">See the full menu</a>
+        </div>
+        <div>
+          <h2 class="eyebrow">Hours</h2>
+          <dl class="mt-4 grid gap-2">
+            {
+              site.hours.map((h) => (
+                <div class="flex flex-wrap justify-between gap-x-4">
+                  <dt class="text-muted">{h.days}</dt>
+                  <dd class="whitespace-nowrap text-cream">{h.time}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+        <div>
+          <h2 class="eyebrow">Dress code</h2>
+          <p class="mt-4 text-cream">{site.dressCode}</p>
+        </div>
+        <div>
+          <h2 class="eyebrow">Cancellations</h2>
+          <p class="mt-4 text-muted">{site.cancellation}</p>
+        </div>
+        <div>
+          <h2 class="eyebrow">Larger parties</h2>
+          <p class="mt-4 text-muted">
+            For more than {site.maxGuests} guests, or to book the room, call
+            <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="link whitespace-nowrap">{site.phone}</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/reserve-form';
+</script>

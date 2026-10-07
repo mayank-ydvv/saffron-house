@@ -1,0 +1,37 @@
+---
+import DietIcons from './DietIcons.astro';
+import SpiceLevel from './SpiceLevel.astro';
+import type { MenuItem } from '../types';
+import { toMask } from '../lib/diet';
+import { formatPrice } from '../lib/format';
+import { regions } from '../lib/data';
+
+interface Props {
+  item: MenuItem;
+}
+const { item } = Astro.props;
+---
+
+<li
+  id={item.id}
+  class="menu-item card scroll-mt-48 border-b border-brass/15 py-7"
+  data-category={item.category}
+  data-diet-mask={toMask(item.diet)}
+  data-spice={item.spice}
+>
+  <div class="flex items-baseline justify-between gap-6">
+    <h3 class="card-title font-display text-[1.625rem] leading-tight text-cream">{item.name}</h3>
+    <p class="shrink-0 font-display text-xl text-saffron lining-nums"><span class="sr-only">Price: </span>{formatPrice(item.price)}</p>
+  </div>
+  <p class="mt-2 max-w-2xl text-muted">{item.description}</p>
+  <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+    <span class="eyebrow text-[0.6875rem]">{regions[item.region].name}</span>
+    <DietIcons diet={item.diet} />
+    <SpiceLevel level={item.spice} />
+    {
+      item.chefPick && (
+        <span class="border border-saffron/60 px-2 py-0.5 text-[0.6875rem] tracking-[0.16em] text-saffron uppercase">Chef’s pick</span>
+      )
+    }
+  </div>
+</li>

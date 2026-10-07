@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import { content } from '../data/content';
+
+const { notFound } = content;
+---
+
+<Base title="Page not found" description={notFound.text} noindex>
+  <section class="wrap flex min-h-[80svh] flex-col items-start justify-center pt-32 pb-20" aria-labelledby="nf-title">
+    <p class="eyebrow">404 · Not found</p>
+    <span class="rule mt-4" aria-hidden="true"></span>
+    <h1 id="nf-title" class="mt-6 max-w-3xl text-display text-cream">{notFound.title}</h1>
+    <p class="mt-6 max-w-xl text-lg text-muted">{notFound.text}</p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <Button href="/">Return home</Button>
+      <Button href="/menu" variant="outline">View the menu</Button>
+    </div>
+  </section>
+</Base>

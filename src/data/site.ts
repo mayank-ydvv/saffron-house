@@ -38,6 +38,7 @@ export const site = {
 
   slots: { open: '19:00', close: '22:30', stepMinutes: 30, closedDays: [1] } satisfies SlotConfig,
   maxGuests: 10,
+  bookingWindowDays: 60,
 
   tasting: { price: 6500, pairingPrice: 9000, courses: 7 },
 

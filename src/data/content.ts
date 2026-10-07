@@ -111,7 +111,7 @@ export const content = {
   reserve: {
     eyebrow: 'Reservations',
     title: 'Reserve a table.',
-    intro: 'Book up to sixty days ahead. For parties larger than ten, please write to us.',
+    intro: 'Book up to sixty days ahead. For parties larger than ten, please call us.',
   },
 
   notFound: {
