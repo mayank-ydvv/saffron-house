@@ -1,0 +1,51 @@
+[
+  {
+    "number": 1,
+    "name": "Amuse-bouche",
+    "dish": "Saffron Pani Puri",
+    "ingredients": "Semolina shell, spiced potato, chilled saffron and mint water, pomegranate.",
+    "pairing": "Grower Champagne, Brut Nature"
+  },
+  {
+    "number": 2,
+    "name": "From the Coast",
+    "dish": "Kingfish, Kokum & Coconut",
+    "ingredients": "Line-caught seer fish cured in kokum, coconut milk, curry-leaf oil, puffed red rice.",
+    "pairing": "Albariño, Rías Baixas"
+  },
+  {
+    "number": 3,
+    "name": "The Tandoor",
+    "dish": "Galouti & Sheermal",
+    "ingredients": "Hand-minced lamb, rose petal, warm saffron sheermal, onion murabba.",
+    "pairing": "Pinot Noir, Central Otago"
+  },
+  {
+    "number": 4,
+    "name": "A Pause",
+    "dish": "Kahwa Granita",
+    "ingredients": "Kashmiri green tea, saffron, cardamom, almond snow.",
+    "pairing": "Warm kahwa, poured at the table"
+  },
+  {
+    "number": 5,
+    "name": "The South",
+    "dish": "Chettinad Pepper Crab",
+    "ingredients": "Mud crab, crushed black pepper, kalpasi, curry leaf, a single lace appam.",
+    "pairing": "Gewürztraminer, Alsace"
+  },
+  {
+    "number": 6,
+    "name": "The Valley",
+    "dish": "Rogan Josh & Gucchi Pulao",
+    "ingredients": "Kid goat in Kashmiri chilli, wild morels, aged basmati, Pampore saffron.",
+    "pairing": "Syrah, Nashik Valley"
+  },
+  {
+    "number": 7,
+    "name": "Dessert",
+    "dish": "Saffron, Milk & Smoke",
+    "ingredients": "Six-hour kulfi, Kashmiri saffron, pistachio, charcoal-smoked jaggery.",
+    "pairing": "Late-harvest Chenin Blanc, Stellenbosch"
+  }
+]

@@ -32,6 +32,8 @@ export interface Region {
   tagline: string;
   signatureDish: string;
   spiceNotes: string;
+  /** Longer copy for the About page. */
+  story: string;
 }
 
 export type Regions = Record<RegionId, Region>;
@@ -57,4 +59,10 @@ export interface SlotConfig {
   stepMinutes: number;
   /** 0 = Sunday … 6 = Saturday. */
   closedDays: number[];
+}
+
+export interface GalleryImage {
+  /** Filename in src/assets/images. */
+  image: string;
+  alt: string;
 }

@@ -1,0 +1,34 @@
+{
+  "kashmir": {
+    "id": "kashmir",
+    "name": "Kashmir",
+    "tagline": "Saffron fields and slow fires.",
+    "signatureDish": "Kashmiri Rogan Josh",
+    "spiceNotes": "Kashmiri chilli for colour, fennel and dry ginger for warmth, saffron from Pampore.",
+    "story": "In the valley, the wazwan is a feast measured in hours, not courses. Meat is pounded by hand, spices are used for colour and fragrance, and heat is always gentle. We take our saffron from a single family in Pampore and our morels from foragers who walk the forest floor each spring."
+  },
+  "awadh": {
+    "id": "awadh",
+    "name": "Awadh",
+    "tagline": "The art of dum.",
+    "signatureDish": "Galouti Kebab",
+    "spiceNotes": "Mace, green cardamom, rose and kewra. Fragrant rather than fiery.",
+    "story": "The kitchens of Lucknow perfected patience. Pots sealed with dough, embers above and below, food left to cook in its own steam. It is a cuisine of softness and perfume. Our galouti follows a method taught to Chef Rao by a retired khansama, minced twice and rested overnight."
+  },
+  "chettinad": {
+    "id": "chettinad",
+    "name": "Chettinad",
+    "tagline": "Fire, pepper and patience.",
+    "signatureDish": "Chettinad Pepper Crab",
+    "spiceNotes": "Black pepper, kalpasi, marathi mogga, star anise and dried red chilli. The boldest table in the south.",
+    "story": "The merchant mansions of Karaikudi gave India one of its most aromatic cuisines. Spices are roasted whole and ground fresh on stone, every day. Nothing is pre-mixed. It is the region closest to our kitchen, and the one our Chennai guests hold us most accountable for."
+  },
+  "konkan": {
+    "id": "konkan",
+    "name": "Konkan",
+    "tagline": "Coconut, kokum and the catch of the day.",
+    "signatureDish": "Konkan Prawn Curry",
+    "spiceNotes": "Kokum, teppal, Byadgi chilli and fresh coconut. Sour, bright and sea-salted.",
+    "story": "Along the western coast, cooking follows the tide. Coconut is grated each morning, kokum lends its gentle sourness, and the fish is whatever came in at dawn. We buy from two boats out of Ratnagiri and change the coastal course with the season."
+  }
+}
