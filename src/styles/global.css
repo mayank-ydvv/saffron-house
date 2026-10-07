@@ -269,6 +269,49 @@ body::after {
   }
 }
 
+/* Cursor accent (created by scripts/cursor.ts on fine pointers only). */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cursor.is-visible {
+  opacity: 1;
+}
+.cursor-dot,
+.cursor-ring {
+  position: absolute;
+  border-radius: 9999px;
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    opacity 0.4s var(--ease-out-expo);
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--color-saffron);
+}
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 1px solid var(--color-saffron);
+  opacity: 0;
+  transform: scale(0.2);
+}
+.cursor.is-hover .cursor-dot {
+  transform: scale(0.5);
+}
+.cursor.is-hover .cursor-ring {
+  opacity: 0.8;
+  transform: scale(1);
+}
+
 /* ---------- Motion (opt-in only) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
@@ -282,6 +325,16 @@ body::after {
 
   html {
     scroll-behavior: smooth;
+  }
+
+  dialog[open] {
+    animation: dialog-in 0.5s var(--ease-out-expo);
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
   }
 
   .js .reveal {
