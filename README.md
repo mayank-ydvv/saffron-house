@@ -1,8 +1,25 @@
 # Saffron House
 
+**[Live site: saffron-house-psi.vercel.app](https://saffron-house-psi.vercel.app)**
+
 A concept website for a **fictional** Indian fine-dining restaurant in Chennai. It's a portfolio piece built to show design taste, clean front-end architecture and near-perfect performance.
 
+![Saffron House home page: dark, candlelit hero with copperware and the headline "A royal table, reimagined."](docs/screenshot-home.jpg)
+
 > Concept project — not a real restaurant. Every name, address, phone number, review and publication is invented.
+
+### Highlights
+
+- **Fast.** Lighthouse mobile scores 98–100 on every page, with near-zero layout shift. The home page ships about 6 KB of JS up front; GSAP (about 44 KB) loads only after the page has finished loading. The menu page ships 3 KB.
+- **Accessible.** WCAG 2.1 AA: full keyboard support, focus trapping in dialogs, visible focus rings, 44px touch targets, 4.5:1+ contrast, and a complete reduced-motion mode.
+- **Thoughtful engineering.**
+  - Bitmask diet filters and O(1) tab switching over pre-rendered HTML.
+  - One shared IntersectionObserver, delegated event listeners, and no scroll listeners.
+  - Content is validated at build time.
+- **Considered motion.** Parallax, a pinned horizontal scroll through the signature dishes, a scroll-drawn tasting timeline, a gold cursor accent and native view transitions. All of it is transform/opacity only.
+- **Everything is data-driven.** The menu, tasting courses, regions, reviews and copy live in `src/data/`, never in the markup.
+
+![Menu page with section tabs, vegetarian/vegan/gluten-free filters and a spice ceiling](docs/screenshot-menu.jpg)
 
 ## Tech stack
 
@@ -133,6 +150,10 @@ The photos illustrate a fictional restaurant. They don't depict the actual dishe
 Icons: [Lucide](https://lucide.dev) (ISC). Fonts: Cormorant Garamond and Inter via [Fontsource](https://fontsource.org) (OFL). Map: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
 
 ## Deploying to Vercel
+
+This repo is connected to Vercel and deploys to **https://saffron-house-psi.vercel.app**. Every push to `main` ships to production automatically, and other branches get preview URLs.
+
+To deploy your own copy:
 
 1. Push this folder to a GitHub repository.
 2. In Vercel, choose **Add New → Project** and import the repo. The **Astro** preset is detected automatically.

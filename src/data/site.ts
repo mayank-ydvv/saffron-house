@@ -5,7 +5,7 @@ export const site = {
   tagline: 'A royal table, reimagined.',
   description:
     'Saffron House reimagines the royal kitchens of India for the modern table. A seven-course tasting journey through Awadh, Chettinad, Kashmir and the Konkan coast, in Nungambakkam, Chennai.',
-  url: 'https://saffron-house.vercel.app',
+  url: 'https://saffron-house-psi.vercel.app',
   locale: 'en_IN',
 
   address: {
@@ -55,7 +55,7 @@ export const site = {
     { label: 'X', href: '#', icon: 'x' },
   ] as const,
 
-  credit: { name: 'Mayank Yadav', href: '#' },
+  credit: { name: 'Mayank Yadav', href: 'https://github.com/mayank-ydvv' },
 } as const;
 
 export type Site = typeof site;
