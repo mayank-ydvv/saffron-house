@@ -6,7 +6,7 @@ A concept website for a **fictional** Indian fine-dining restaurant in Chennai. 
 
 ## Tech stack
 
-- **Astro 5**: static output, with no UI framework and no hydration
+- **Astro 7**: static output, with no UI framework and no hydration
 - **Tailwind CSS 4**: design tokens live in `@theme` in `src/styles/global.css`
 - **Vanilla TypeScript**, strict mode, for all interactivity
 - **GSAP + ScrollTrigger**: dynamically imported on the home page only, after `load` + idle
@@ -28,7 +28,7 @@ npm run check      # astro check (TypeScript + Astro diagnostics)
 npm run assets     # regenerate placeholder images / OG card / IMAGES.md (never overwrites)
 ```
 
-Node 20+ is recommended.
+Requires Node 22.12 or newer.
 
 ## Folder structure
 
@@ -91,12 +91,12 @@ These are measured on the production build (gzipped):
 
 | Page | JS | CSS (inlined) | Lighthouse mobile (Perf / A11y / BP / SEO) |
 |---|---|---|---|
-| Home | 5.9 KB initial + 45 KB GSAP after `load` | ~9 KB | 98 / 100 / 100 / 100 |
-| Menu | 3.0 KB | ~9 KB | 100 / 100 / 100 / 100 |
-| Reserve | 3.6 KB | ~9 KB | 100 / 100 / 100 / 100 |
+| Home | 6.1 KB initial + 44 KB GSAP after `load` | ~9 KB | 100 / 100 / 100 / 100 |
+| Menu | 2.9 KB | ~9 KB | 100 / 100 / 100 / 100 |
+| Reserve | 3.5 KB | ~9 KB | 100 / 100 / 100 / 100 |
 | About | 1.6 KB | ~9 KB | 100 / 100 / 100 / 100 |
 
-CLS is 0 on every page. The scores were measured with placeholder images, so re-run Lighthouse after adding photography.
+CLS is at most 0.001 on every page. Metric-matched fallback fonts (`size-adjust` / `ascent-override`) keep the web-font swap from moving text. The scores were measured with placeholder images, so re-run Lighthouse after adding photography.
 
 ### Algorithmic choices
 
