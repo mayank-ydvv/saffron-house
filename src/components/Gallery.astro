@@ -1,0 +1,87 @@
+---
+import { Image, getImage } from 'astro:assets';
+import ChevronLeft from '@lucide/astro/icons/chevron-left';
+import ChevronRight from '@lucide/astro/icons/chevron-right';
+import X from '@lucide/astro/icons/x';
+import SectionHeading from './SectionHeading.astro';
+import { content } from '../data/content';
+import { gallery } from '../lib/data';
+import { img } from '../lib/images';
+
+// Full-size images are generated at build time but only requested when the lightbox opens.
+const items = await Promise.all(
+  gallery.map(async (g) => ({
+    ...g,
+    meta: img(g.image),
+    full: await getImage({ src: img(g.image), width: 1600, format: 'webp', quality: 80 }),
+  })),
+);
+---
+
+<section id="gallery" class="section cv-auto" aria-labelledby="gallery-title">
+  <div class="wrap">
+    <SectionHeading id="gallery-title" eyebrow={content.gallery.eyebrow} title={content.gallery.title} />
+    <ul data-gallery class="mt-12 gap-4 sm:columns-2 lg:columns-3">
+      {
+        items.map((item, i) => (
+          <li class="reveal mb-4 break-inside-avoid" style={`--d:${i % 3}`}>
+            <button
+              type="button"
+              data-index={i}
+              data-full={item.full.src}
+              data-width={item.full.attributes.width}
+              data-height={item.full.attributes.height}
+              class="card group block w-full overflow-hidden"
+              aria-haspopup="dialog"
+            >
+              <span class="card-media block">
+                <Image
+                  src={item.meta}
+                  widths={[480, 960]}
+                  sizes="(min-width: 64rem) 26rem, (min-width: 40rem) 50vw, 100vw"
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-auto w-full transition-opacity duration-500 group-hover:opacity-90"
+                />
+              </span>
+              <span class="sr-only">Open larger view</span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <dialog
+    id="lightbox"
+    aria-label="Image viewer"
+    class="m-0 h-dvh max-h-none w-full max-w-none bg-ink/95 p-0 text-cream backdrop:bg-ink/90"
+  >
+    <div class="flex h-full flex-col">
+      <div class="wrap flex h-16 items-center justify-between">
+        <p class="text-sm tracking-[0.15em] text-muted" aria-live="polite"><span data-counter></span></p>
+        <button type="button" data-action="close" class="-mr-2 inline-flex h-11 w-11 items-center justify-center hover:text-saffron">
+          <X size={24} stroke-width={1.5} aria-hidden="true" />
+          <span class="sr-only">Close image viewer</span>
+        </button>
+      </div>
+      <figure class="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-4 pb-6 sm:px-20">
+        <img data-image alt="" class="max-h-full min-h-0 max-w-full object-contain" decoding="async" />
+        <figcaption data-caption class="max-w-2xl text-center text-sm text-muted"></figcaption>
+      </figure>
+      <button type="button" data-action="prev" class="absolute top-1/2 left-2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 bg-ink/60 hover:border-saffron hover:text-saffron sm:left-6">
+        <ChevronLeft size={24} stroke-width={1.5} aria-hidden="true" />
+        <span class="sr-only">Previous image</span>
+      </button>
+      <button type="button" data-action="next" class="absolute top-1/2 right-2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 bg-ink/60 hover:border-saffron hover:text-saffron sm:right-6">
+        <ChevronRight size={24} stroke-width={1.5} aria-hidden="true" />
+        <span class="sr-only">Next image</span>
+      </button>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  import '../scripts/lightbox';
+</script>

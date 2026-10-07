@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import { content } from '../data/content';
+import { img, WIDTHS } from '../lib/images';
+
+const { chef } = content;
+---
+
+<section id="chef" class="cv-auto pb-[clamp(4.5rem,10vw,9rem)]" aria-labelledby="chef-title">
+  <div class="relative aspect-[4/3] overflow-hidden sm:aspect-[21/9]">
+    <Image
+      src={img(chef.image)}
+      widths={WIDTHS}
+      sizes="100vw"
+      alt={chef.alt}
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 bg-linear-to-t from-ink via-ink/10 to-transparent" aria-hidden="true"></div>
+  </div>
+  <div class="wrap relative -mt-16 grid gap-12 sm:-mt-24 lg:grid-cols-[1.1fr_0.9fr] lg:gap-24">
+    <figure class="reveal">
+      <p class="eyebrow">{chef.eyebrow}</p>
+      <blockquote class="mt-6">
+        <p class="font-display text-display text-cream">“{chef.quote}”</p>
+      </blockquote>
+      <figcaption id="chef-title" class="mt-6 text-saffron">Chef {chef.name}</figcaption>
+    </figure>
+    <div class="reveal self-end" style="--d:1">
+      {chef.bio.map((p) => <p class="mt-4 text-cream/85 first:mt-0">{p}</p>)}
+      <a href="/about" class="link mt-6 inline-flex min-h-11 items-center">Meet the chef</a>
+    </div>
+  </div>
+</section>

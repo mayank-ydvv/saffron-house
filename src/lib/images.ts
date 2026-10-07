@@ -14,3 +14,9 @@ export function img(name: string): ImageMetadata {
 }
 
 export const hasImage = (name: string) => byName.has(name);
+
+/** Shared responsive widths (480/960/1600) per the performance budget. */
+export const WIDTHS = [480, 960, 1600];
+
+/** The hero is object-fit: cover, so on tall screens it renders wider than the viewport. */
+export const HERO_SIZES = '(max-aspect-ratio: 16/9) calc(100svh * 16 / 9), 100vw';

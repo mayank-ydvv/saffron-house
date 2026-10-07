@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import { content } from '../data/content';
+import { img, WIDTHS } from '../lib/images';
+
+const { philosophy } = content;
+---
+
+<section id="story" class="section" aria-labelledby="story-title">
+  <div class="wrap grid items-center gap-14 lg:grid-cols-[1fr_0.9fr] lg:gap-24">
+    <div class="max-w-xl">
+      <SectionHeading id="story-title" eyebrow={philosophy.eyebrow} title={philosophy.title} />
+      {
+        philosophy.paragraphs.map((p, i) => (
+          <p class="reveal mt-6 text-lg text-cream/85 first-of-type:mt-8" style={`--d:${i + 1}`}>
+            {p}
+          </p>
+        ))
+      }
+      <a href="/about" class="reveal link mt-8 inline-flex min-h-11 items-center" style="--d:3">The story of the house</a>
+    </div>
+    <figure class="reveal relative aspect-[2/3] overflow-hidden lg:-mb-24" style="--d:1">
+      <div data-parallax class="absolute -inset-y-[12%] inset-x-0">
+        <Image
+          src={img(philosophy.image)}
+          widths={WIDTHS}
+          sizes="(min-width: 64rem) 40vw, 100vw"
+          alt={philosophy.alt}
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </figure>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+---
+import Button from './Button.astro';
+import { content } from '../data/content';
+
+const { cta } = content;
+---
+
+<section class="relative isolate overflow-hidden bg-maroon" aria-labelledby="cta-title">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgb(227_162_26/0.18),transparent_60%)]" aria-hidden="true"></div>
+  <div class="wrap reveal flex flex-col items-center py-20 text-center sm:py-28">
+    <span class="rule bg-saffron" aria-hidden="true"></span>
+    <h2 id="cta-title" class="mt-8 text-display text-cream">{cta.title}</h2>
+    <p class="mt-4 max-w-md text-cream/85">{cta.text}</p>
+    <Button href="/reserve" class="mt-10">Reserve a Table</Button>
+  </div>
+</section>

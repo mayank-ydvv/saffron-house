@@ -1,0 +1,79 @@
+---
+import MapPin from '@lucide/astro/icons/map-pin';
+import Phone from '@lucide/astro/icons/phone';
+import Mail from '@lucide/astro/icons/mail';
+import Shirt from '@lucide/astro/icons/shirt';
+import SectionHeading from './SectionHeading.astro';
+import { content } from '../data/content';
+import { site } from '../data/site';
+
+const { lat, lng } = site.geo;
+const d = 0.006;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - d}%2C${lat - d}%2C${lng + d}%2C${lat + d}&layer=mapnik&marker=${lat}%2C${lng}`;
+const mapLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=16/${lat}/${lng}`;
+const { address } = site;
+const icon = 'mt-1 shrink-0 text-brass';
+---
+
+<section id="location" class="section cv-auto" aria-labelledby="location-title">
+  <div class="wrap grid gap-14 lg:grid-cols-2 lg:gap-20">
+    <div>
+      <SectionHeading id="location-title" eyebrow={content.location.eyebrow} title={content.location.title} />
+      <ul class="reveal mt-10 flex flex-col gap-5" style="--d:1">
+        <li class="flex gap-4">
+          <MapPin size={20} stroke-width={1.5} class={icon} aria-hidden="true" />
+          <address class="not-italic">
+            {address.street}<br />{address.locality}, {address.city} {address.postalCode}<br />{address.region}, India
+          </address>
+        </li>
+        <li class="flex gap-4">
+          <Phone size={20} stroke-width={1.5} class={icon} aria-hidden="true" />
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="hover:text-saffron">{site.phone}</a>
+        </li>
+        <li class="flex gap-4">
+          <Mail size={20} stroke-width={1.5} class={icon} aria-hidden="true" />
+          <a href={`mailto:${site.email}`} class="break-all hover:text-saffron">{site.email}</a>
+        </li>
+        <li class="flex gap-4">
+          <Shirt size={20} stroke-width={1.5} class={icon} aria-hidden="true" />
+          <span>Dress code: {site.dressCode}</span>
+        </li>
+      </ul>
+
+      <table class="reveal mt-10 w-full max-w-md text-left" style="--d:2">
+        <caption class="eyebrow mb-3 text-left">Hours</caption>
+        <tbody>
+          {
+            site.hours.map((h) => (
+              <tr class="border-b border-brass/20">
+                <th scope="row" class="py-3 pr-4 font-normal text-muted">
+                  {h.days}
+                </th>
+                <td class="py-3 text-right text-cream">{h.time}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reveal flex flex-col gap-3" style="--d:1">
+      <div class="relative aspect-[4/3] overflow-hidden border border-brass/25 bg-char lg:aspect-auto lg:min-h-[32rem] lg:flex-1">
+        <iframe
+          src={mapSrc}
+          title={`Map showing ${site.name}, ${address.locality}, ${address.city}`}
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          class="map absolute inset-0 h-full w-full"></iframe>
+      </div>
+      <a href={mapLink} class="link inline-flex min-h-11 items-center self-start text-sm" rel="noopener">View larger map</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Tone the light OSM tiles down to sit inside the dark palette. */
+  .map {
+    filter: grayscale(1) invert(0.92) contrast(0.9) sepia(0.25);
+  }
+</style>

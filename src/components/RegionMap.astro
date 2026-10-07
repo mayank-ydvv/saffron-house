@@ -1,0 +1,133 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { content } from '../data/content';
+import { regions } from '../lib/data';
+import type { RegionId } from '../types';
+
+const { regions: copy } = content;
+
+// A deliberately stylised outline (not a survey map), projected from simplified lon/lat points.
+const OUTLINE =
+  'M93 17.4 113.2 18.8 133.5 33.6 152.4 36.3 174 39 164.5 63.3 163.2 78.1 157.8 90.3 176.7 103.8 187.5 129.4 221.2 147 248.2 155.1 282 159.1 284.7 140.2 294.2 148.3 300.9 153.8 336 153.8 333.3 141.6 363 124 392.7 120 406.2 134.8 391.3 148.3 379.2 163.2 371.1 178 361.7 198.3 353.5 219.9 344.1 217.2 338.7 196.9 327.9 191.5 334.7 178 309 176.7 295.5 176.7 287.4 188.8 292.8 203.7 295.5 222.6 275.2 225.3 265.8 238.8 241.5 255 228 271.2 205 292.8 190.2 303.6 176.7 313 176.7 337.3 171.3 360.3 172.7 377.8 161.8 391.3 149.7 396.8 140.2 407.5 132.2 400.8 124 387.3 117.3 364.3 103.8 342.8 97 321.1 90.3 306.3 83.5 280.6 76.8 260.4 76.8 240.1 74.1 228 52.5 236.1 37.7 225.3 24.2 215.8 39 209.1 20.1 201 17.4 195.6 33.6 188.8 52.5 184.8 40.3 167.2 33.6 152.4 47.1 140.2 68.7 126.8 84.9 113.2 101.1 98.4 106.5 79.5 93 71.4 89 52.5 74.1 32.2 82.2 20.1Z';
+
+const AREAS: { id: RegionId; d: string; label: [number, number, 'start' | 'middle' | 'end'] }[] = [
+  { id: 'kashmir', d: 'M91.7 44.4 114.6 41.7 138.9 49.8 133.5 66 114.6 76.8 98.4 72.8 90.3 59.2Z', label: [146, 62, 'start'] },
+  { id: 'awadh', d: 'M160.5 144.3 182.1 134.8 205 140.2 221.2 153.8 214.5 171.3 192.9 176.7 171.3 171.3 159.2 159.1Z', label: [190, 196, 'middle'] },
+  { id: 'konkan', d: 'M76.8 252.3 87.6 253.6 94.3 279.3 101.1 306.3 98.4 317.1 90.3 314.4 83.5 290.1 76.8 265.8Z', label: [68, 290, 'end'] },
+  { id: 'chettinad', d: 'M145 366 168 366 175 379.2 168 393 152 394 143 380.5Z', label: [184, 392, 'start'] },
+];
+
+const initial: RegionId = 'awadh';
+const first = regions[initial];
+---
+
+<section id="regions" class="section bg-char" aria-labelledby="regions-title">
+  <div class="wrap">
+    <SectionHeading id="regions-title" eyebrow={copy.eyebrow} title={copy.title}>
+      <p class="mt-6 max-w-md text-muted">{copy.intro}</p>
+    </SectionHeading>
+
+    <div data-region-map class="mt-12 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div class="reveal">
+        <svg viewBox="0 0 420 420" class="region-svg mx-auto w-full max-w-[34rem]" role="group" aria-label="Map of India with four culinary regions">
+          <path d={OUTLINE} class="fill-ink stroke-brass/60" stroke-width="1.2" stroke-linejoin="round"></path>
+          {
+            AREAS.map((a) => (
+              <path
+                d={a.d}
+                data-region={a.id}
+                data-active={a.id === initial ? '' : undefined}
+                tabindex="0"
+                role="button"
+                aria-pressed={a.id === initial ? 'true' : 'false'}
+                aria-label={regions[a.id].name}
+                aria-controls="region-panel"
+                class="region"
+              />
+            ))
+          }
+          <g aria-hidden="true" class="pointer-events-none fill-muted font-display text-[15px] tracking-wide">
+            {
+              AREAS.map((a) => (
+                <text x={a.label[0]} y={a.label[1]} text-anchor={a.label[2]}>
+                  {regions[a.id].name}
+                </text>
+              ))
+            }
+          </g>
+          <g aria-hidden="true" class="pointer-events-none">
+            <circle cx="177.6" cy="340.3" r="3.5" class="fill-cream"></circle>
+            <circle cx="177.6" cy="340.3" r="8" class="fill-none stroke-cream/40"></circle>
+            <text x="190" y="344" class="fill-cream font-body text-[11px] tracking-[0.15em] uppercase">Saffron House</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="reveal" style="--d:1">
+        <ul class="flex flex-wrap gap-2" aria-label="Choose a region">
+          {
+            AREAS.map((a) => (
+              <li>
+                <button
+                  type="button"
+                  data-region={a.id}
+                  aria-pressed={a.id === initial ? 'true' : 'false'}
+                  aria-controls="region-panel"
+                  class="region-chip min-h-11 border border-brass/40 px-4 text-sm tracking-[0.12em] text-cream/85 uppercase hover:border-saffron"
+                >
+                  {regions[a.id].name}
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div id="region-panel" class="mt-8 border-t border-brass/25 pt-8" aria-live="polite">
+          <h3 data-field="name" class="font-display text-display text-cream">{first.name}</h3>
+          <p data-field="tagline" class="mt-2 font-display text-title text-saffron">{first.tagline}</p>
+          <dl class="mt-8 grid gap-6 sm:grid-cols-2">
+            <div>
+              <dt class="eyebrow">Signature dish</dt>
+              <dd data-field="signatureDish" class="mt-2 text-cream">{first.signatureDish}</dd>
+            </div>
+            <div>
+              <dt class="eyebrow">Spice notes</dt>
+              <dd data-field="spiceNotes" class="mt-2 text-muted">{first.spiceNotes}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .region {
+    fill: color-mix(in srgb, var(--color-brass) 35%, transparent);
+    stroke: var(--color-brass);
+    stroke-width: 1;
+    cursor: pointer;
+    transition:
+      fill 0.4s var(--ease-out-expo),
+      opacity 0.4s;
+    outline: none;
+  }
+  .region:hover,
+  .region[data-active] {
+    fill: var(--color-saffron);
+    stroke: var(--color-saffron);
+  }
+  .region:focus-visible {
+    stroke: var(--color-cream);
+    stroke-width: 2.5;
+  }
+  .region-chip[aria-pressed='true'] {
+    background: var(--color-saffron);
+    border-color: var(--color-saffron);
+    color: var(--color-ink);
+  }
+</style>
+
+<script>
+  import '../scripts/regions';
+</script>

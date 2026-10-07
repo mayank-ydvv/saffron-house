@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import SpiceLevel from './SpiceLevel.astro';
+import { content } from '../data/content';
+import { chefPicks, regions } from '../lib/data';
+import { img } from '../lib/images';
+
+const { signature } = content;
+const firstSentence = (text: string) => text.split(/(?<=\.)\s/)[0];
+---
+
+<section id="signature" class="section overflow-hidden bg-char" aria-labelledby="signature-title">
+  <div data-pin class="lg:flex lg:min-h-svh lg:flex-col lg:justify-center">
+    <div class="wrap flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <SectionHeading id="signature-title" eyebrow={signature.eyebrow} title={signature.title} />
+      <p class="reveal max-w-sm text-muted" style="--d:1">{signature.intro}</p>
+    </div>
+
+    <div
+      data-track-viewport
+      class="sig-viewport mt-12 overflow-x-auto overscroll-x-contain lg:mt-16"
+      role="region"
+      aria-label="Signature dishes. Scroll horizontally for more."
+      tabindex="0"
+    >
+      <ul data-track class="flex w-max gap-5 px-(--gutter) pb-4 lg:gap-8">
+        {
+          chefPicks.map((dish, i) => (
+            <li class="reveal w-[78vw] max-w-[22rem] shrink-0 snap-start sm:w-[44vw] lg:w-[24rem]" style={`--d:${i % 3}`}>
+              <a href={`/menu?tab=${dish.category}#${dish.id}`} class="card group block">
+                <div class="card-media aspect-[4/5] bg-ink">
+                  <Image
+                    src={img(dish.image!)}
+                    widths={[480, 960]}
+                    sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 44vw, 78vw"
+                    alt={`${dish.name}, plated`}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <p class="eyebrow">{regions[dish.region].name}</p>
+                  <SpiceLevel level={dish.spice} />
+                </div>
+                <h3 class="card-title mt-2 font-display text-title text-cream">{dish.name}</h3>
+                <p class="mt-2 text-muted">{firstSentence(dish.description)}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Align the first card with the .wrap content edge at every width. */
+  .sig-viewport {
+    --gutter: max(clamp(1rem, 4vw, 2.5rem), calc((100% - var(--container-content)) / 2 + clamp(1rem, 4vw, 2.5rem)));
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-brass) transparent;
+  }
+  /* Once GSAP pins the section, the track is driven by scroll instead. */
+  .sig-viewport.is-pinned {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+</style>

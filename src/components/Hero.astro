@@ -1,0 +1,129 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { Picture } from 'astro:assets';
+import Pause from '@lucide/astro/icons/pause';
+import Play from '@lucide/astro/icons/play';
+import Button from './Button.astro';
+import { content } from '../data/content';
+import { site } from '../data/site';
+import { HERO_SIZES, img, WIDTHS } from '../lib/images';
+
+const { hero } = content;
+// The video only switches on once both encodes have been supplied (see IMAGES.md).
+const hasVideo = ['hero.mp4', 'hero.webm'].every((f) => existsSync(join(process.cwd(), 'public/video', f)));
+// Words are split at build time so the rise animation needs no JS.
+const words = hero.headline.split(' ');
+---
+
+<section id="top" class="relative isolate flex min-h-[36rem] h-svh items-end overflow-hidden" aria-labelledby="hero-title">
+  <div class="hero-media absolute inset-0 -z-20">
+    <Picture
+      src={img(hero.image)}
+      formats={['avif', 'webp']}
+      widths={WIDTHS}
+      sizes={HERO_SIZES}
+      alt={hero.alt}
+      loading="eager"
+      fetchpriority="high"
+      class="h-full w-full object-cover"
+    />
+    {
+      hasVideo && (
+        <video
+          data-hero-video
+          class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+          tabindex="-1"
+        />
+      )
+    }
+  </div>
+  <div class="absolute inset-0 -z-10 bg-linear-to-b from-ink/70 via-ink/25 to-ink" aria-hidden="true"></div>
+
+  <div class="wrap pb-[12svh]">
+    <p class="hero-fade eyebrow" style="--i:0">{site.address.locality} · {site.address.city}</p>
+    <h1 id="hero-title" class="mt-5 max-w-[14ch] text-hero text-cream xl:text-[7.5rem]" aria-label={hero.headline}>
+      {
+        words.map((word, i) => (
+          <>
+            <span class="inline-block overflow-hidden pb-[0.08em] align-bottom" aria-hidden="true">
+              <span class="hero-word inline-block" style={`--i:${i}`}>
+                {word}
+              </span>
+            </span>{' '}
+          </>
+        ))
+      }
+    </h1>
+    <p class="hero-fade mt-6 max-w-xl text-lg text-cream/85" style="--i:5">{hero.subtext}</p>
+    <div class="hero-fade mt-10 flex flex-wrap gap-4" style="--i:6">
+      <Button href="/reserve">Reserve a Table</Button>
+      <Button href="/menu" variant="outline">View Menu</Button>
+    </div>
+  </div>
+
+  {
+    hasVideo && (
+      <button
+        type="button"
+        data-video-toggle
+        hidden
+        class="absolute right-4 bottom-6 inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/40 text-cream hover:border-saffron hover:text-saffron sm:right-8"
+      >
+        <Pause size={18} stroke-width={1.5} data-icon="pause" aria-hidden="true" />
+        <Play size={18} stroke-width={1.5} data-icon="play" class="hidden" aria-hidden="true" />
+        <span class="sr-only" data-label>
+          Pause background video
+        </span>
+      </button>
+    )
+  }
+</section>
+
+<script>
+  import '../scripts/hero-video';
+</script>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-media {
+      animation: hero-zoom 10s var(--ease-out-expo) both;
+    }
+    .hero-word {
+      animation: hero-rise 1.1s var(--ease-out-expo) both;
+      animation-delay: calc(250ms + var(--i) * 80ms);
+    }
+    .hero-fade {
+      animation: hero-fade 1s var(--ease-out-expo) both;
+      animation-delay: calc(250ms + var(--i) * 80ms);
+    }
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+  @keyframes hero-rise {
+    from {
+      transform: translateY(105%);
+      opacity: 0;
+    }
+  }
+  @keyframes hero-fade {
+    from {
+      transform: translateY(16px);
+      opacity: 0;
+    }
+  }
+  [data-hero-video].is-playing {
+    opacity: 1;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import Leaf from '@lucide/astro/icons/leaf';
+import Sprout from '@lucide/astro/icons/sprout';
+import WheatOff from '@lucide/astro/icons/wheat-off';
+import type { Diet } from '../types';
+import { DIET_LABELS } from '../lib/diet';
+
+interface Props {
+  diet: readonly Diet[];
+}
+const { diet } = Astro.props;
+// Vegan implies vegetarian, so show the more specific mark only.
+const shown = diet.includes('vegan') ? diet.filter((d) => d !== 'veg') : diet;
+const icons = { veg: Leaf, vegan: Sprout, gf: WheatOff } as const;
+---
+
+{
+  shown.length > 0 && (
+    <ul class="flex items-center gap-2 text-brass" aria-label="Dietary">
+      {shown.map((d) => {
+        const Icon = icons[d];
+        return (
+          <li class="inline-flex" title={DIET_LABELS[d]}>
+            <Icon size={16} stroke-width={1.5} aria-hidden="true" />
+            <span class="sr-only">{DIET_LABELS[d]}</span>
+          </li>
+        );
+      })}
+    </ul>
+  )
+}

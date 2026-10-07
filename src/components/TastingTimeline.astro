@@ -1,0 +1,66 @@
+---
+import Wine from '@lucide/astro/icons/wine';
+import SectionHeading from './SectionHeading.astro';
+import Button from './Button.astro';
+import { content } from '../data/content';
+import { site } from '../data/site';
+import { tasting } from '../lib/data';
+import { formatPrice } from '../lib/format';
+
+const { tasting: copy } = content;
+---
+
+<section id="tasting" class="section" aria-labelledby="tasting-title">
+  <div class="wrap grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+    <div class="lg:sticky lg:top-32 lg:self-start">
+      <SectionHeading id="tasting-title" eyebrow={copy.eyebrow} title={copy.title} />
+      <p class="reveal mt-6 max-w-md text-lg text-cream/85" style="--d:1">{copy.intro}</p>
+      <dl class="reveal mt-10 grid max-w-md grid-cols-2 border-y border-brass/25" style="--d:2">
+        <div class="py-5 pr-4">
+          <dt class="text-sm text-muted">Per guest</dt>
+          <dd class="mt-1 font-display text-3xl text-cream">{formatPrice(site.tasting.price)}</dd>
+        </div>
+        <div class="border-l border-brass/25 py-5 pl-6">
+          <dt class="text-sm text-muted">With wine pairing</dt>
+          <dd class="mt-1 font-display text-3xl text-cream">{formatPrice(site.tasting.pairingPrice)}</dd>
+        </div>
+      </dl>
+      <div class="reveal mt-10 flex flex-wrap items-center gap-6" style="--d:3">
+        <Button href="/reserve">Reserve the tasting</Button>
+        <a href="/menu?tab=tasting" class="link inline-flex min-h-11 items-center">Full tasting menu</a>
+      </div>
+    </div>
+
+    <div class="relative">
+      <!-- Track + scroll-drawn line. Without JS the line is simply complete. -->
+      <svg class="absolute top-2 bottom-2 left-[1.0625rem] w-px overflow-visible" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 2 100">
+        <line x1="1" y1="0" x2="1" y2="100" stroke="var(--color-brass)" stroke-opacity=".25" vector-effect="non-scaling-stroke"></line>
+        <line data-draw x1="1" y1="0" x2="1" y2="100" stroke="var(--color-saffron)" stroke-width="2" pathLength="1" stroke-dasharray="1" vector-effect="non-scaling-stroke"></line>
+      </svg>
+      <ol class="flex flex-col gap-12 lg:gap-16">
+        {
+          tasting.map((course) => (
+            <li class="reveal relative grid grid-cols-[2.25rem_1fr] gap-6">
+              <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-brass bg-ink font-display text-lg text-saffron" aria-hidden="true">
+                {course.number}
+              </span>
+              <div>
+                <p class="eyebrow">
+                  <span class="sr-only">Course {course.number}: </span>
+                  {course.name}
+                </p>
+                <h3 class="mt-2 font-display text-title text-cream">{course.dish}</h3>
+                <p class="mt-2 text-muted">{course.ingredients}</p>
+                <p class="mt-3 inline-flex items-center gap-2 text-sm text-cream/80">
+                  <Wine size={16} stroke-width={1.5} class="text-brass" aria-hidden="true" />
+                  <span class="sr-only">Pairing:</span>
+                  {course.pairing}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

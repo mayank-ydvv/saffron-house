@@ -1,13 +1,41 @@
 ---
+import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import { menu, chefPicks } from '../lib/data';
-import { formatPrice } from '../lib/format';
+import Hero from '../components/Hero.astro';
+import Philosophy from '../components/Philosophy.astro';
+import SignatureDishes from '../components/SignatureDishes.astro';
+import TastingTimeline from '../components/TastingTimeline.astro';
+import RegionMap from '../components/RegionMap.astro';
+import ChefSection from '../components/ChefSection.astro';
+import Gallery from '../components/Gallery.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ReserveCTA from '../components/ReserveCTA.astro';
+import Location from '../components/Location.astro';
+import { content } from '../data/content';
+import { HERO_SIZES, img, WIDTHS } from '../lib/images';
+
+// Same options as the hero <Picture>'s AVIF source, so the preload is reused, not duplicated.
+const heroAvif = await getImage({ src: img(content.hero.image), widths: WIDTHS, format: 'avif' });
 ---
 
 <Base>
-  <section class="wrap flex min-h-svh flex-col justify-center gap-6 pt-24">
-    <p class="eyebrow">Phase 2</p>
-    <h1 class="text-hero">A royal table, reimagined.</h1>
-    <p class="text-muted">{menu.length} dishes · {chefPicks.length} chef’s picks · from {formatPrice(Math.min(...menu.map((m) => m.price)))}</p>
-  </section>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    imagesrcset={heroAvif.srcSet.attribute}
+    imagesizes={HERO_SIZES}
+    fetchpriority="high"
+  />
+  <Hero />
+  <Philosophy />
+  <SignatureDishes />
+  <TastingTimeline />
+  <RegionMap />
+  <ChefSection />
+  <Gallery />
+  <Testimonials />
+  <ReserveCTA />
+  <Location />
 </Base>
