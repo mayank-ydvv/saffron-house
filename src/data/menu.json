@@ -9,7 +9,8 @@
     "diet": [],
     "spice": 1,
     "chefPick": true,
-    "image": "galouti.jpg"
+    "image": "galouti.jpg",
+    "imageAlt": "Kebabs on skewers over a charcoal grill"
   },
   {
     "id": "chettinad-pepper-crab",
@@ -21,7 +22,8 @@
     "diet": ["gf"],
     "spice": 3,
     "chefPick": true,
-    "image": "pepper-crab.jpg"
+    "image": "pepper-crab.jpg",
+    "imageAlt": "Three whole crabs on a dark green plate"
   },
   {
     "id": "tandoori-broccoli",
@@ -77,7 +79,8 @@
     "diet": ["gf"],
     "spice": 2,
     "chefPick": true,
-    "image": "nihari.jpg"
+    "image": "nihari.jpg",
+    "imageAlt": "A slow-braised lamb shank in a dark bowl with roasted vegetables"
   },
   {
     "id": "kashmiri-rogan-josh",
@@ -89,7 +92,8 @@
     "diet": ["gf"],
     "spice": 2,
     "chefPick": true,
-    "image": "rogan-josh.jpg"
+    "image": "rogan-josh.jpg",
+    "imageAlt": "A deep red lamb curry in a clay bowl, seen from above"
   },
   {
     "id": "konkan-prawn-curry",
@@ -101,7 +105,8 @@
     "diet": ["gf"],
     "spice": 2,
     "chefPick": true,
-    "image": "prawn-curry.jpg"
+    "image": "prawn-curry.jpg",
+    "imageAlt": "Tiger prawns in a creamy coconut curry, topped with chilli threads"
   },
   {
     "id": "gucchi-pulao",
@@ -113,7 +118,8 @@
     "diet": ["veg", "gf"],
     "spice": 0,
     "chefPick": true,
-    "image": "gucchi-pulao.jpg"
+    "image": "gucchi-pulao.jpg",
+    "imageAlt": "A spoonful of saffron rice lifted from a dark pan"
   },
   {
     "id": "paneer-lababdar",

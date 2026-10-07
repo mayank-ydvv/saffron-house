@@ -16,6 +16,8 @@ export interface MenuItem {
   spice: Spice;
   chefPick: boolean;
   image?: string;
+  /** Describes the photo itself (required when `image` is set). */
+  imageAlt?: string;
 }
 
 export interface Course {

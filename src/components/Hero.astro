@@ -44,6 +44,8 @@ const words = hero.headline.split(' ');
     }
   </div>
   <div class="absolute inset-0 -z-10 bg-linear-to-b from-ink/70 via-ink/25 to-ink" aria-hidden="true"></div>
+  <!-- Keeps the headline legible over bright subjects in the photo. -->
+  <div class="absolute inset-0 -z-10 bg-linear-to-r from-ink/80 via-ink/35 to-transparent" aria-hidden="true"></div>
 
   <div class="wrap pb-[12svh]">
     <p class="hero-fade eyebrow" style="--i:0">{site.address.locality} · {site.address.city}</p>

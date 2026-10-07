@@ -6,7 +6,7 @@
  * Existing files are NEVER overwritten: drop a real photo in with the same filename and it wins.
  * Run: npm run assets
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -108,10 +108,18 @@ const ratio = (w, h) => {
   return `${w / d}:${h / d}`;
 };
 
+const credits = existsSync(new URL('src/data/credits.json', root))
+  ? JSON.parse(readFileSync(new URL('src/data/credits.json', root), 'utf8'))
+  : {};
+const creditLines = Object.entries(credits)
+  .map(([file, c]) => `- \`${file}\`: photo by ${c.photographer} on [${c.source}](${c.url})`)
+  .join('\n');
+
 const md = `# Images
 
-The site ships with **generated placeholders** (warm gradients at the correct aspect ratio), so layout never shifts
-when real photography is added. To replace one, save a photo with the **same filename** in \`src/assets/images/\`.
+Photography is from Unsplash (free Unsplash License); credits are below and in \`src/data/credits.json\`.
+Missing files fall back to **generated placeholders** at the correct aspect ratio. To replace a photo, save one with the
+**same filename** in \`src/assets/images/\` and update its entry in \`src/data/credits.json\`.
 Astro re-encodes it to AVIF/WebP at 480/960/1600 widths at build time.
 
 Art direction: dark, low-key and warm. Close-up plating, hands, steam, brass and copperware. Avoid bright backgrounds.
@@ -132,8 +140,7 @@ Add \`public/video/hero.mp4\` (H.264) and \`public/video/hero.webm\` (VP9), 8–
 
 ## Credits
 
-Add the photographer and source for each photo here and in README.md, for example:
-\`hero-poster.jpg\` — Photo by NAME on Unsplash (link).
+${creditLines || 'Add the photographer and source for each photo to src/data/credits.json.'}
 `;
 await writeFile(new URL('IMAGES.md', root), md);
 

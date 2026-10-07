@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, Picture, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -9,12 +9,26 @@ import { img, WIDTHS } from '../lib/images';
 
 const { about, chef } = content;
 const regionList = Object.values(regions);
+
+// The portrait is this page's LCP on phones: AVIF at q50 (the source is pre-softened, since flour grain is costly
+// to encode), preloaded with the exact srcset the <picture> uses.
+const PORTRAIT_SIZES = '(min-width: 64rem) 40vw, 100vw';
+const portraitAvif = await getImage({ src: img(chef.portrait), widths: WIDTHS, format: 'avif', quality: 50 });
 ---
 
 <Base
   title="About"
   description="Meet Chef Arjun Rao and the Saffron House kitchen: our philosophy, the four regions we cook from, and the growers and fishing families we source from."
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/avif"
+    imagesrcset={portraitAvif.srcSet.attribute}
+    imagesizes={PORTRAIT_SIZES}
+    fetchpriority="high"
+  />
   <header class="wrap pt-32 pb-16 sm:pt-40">
     <p class="eyebrow">{about.eyebrow}</p>
     <span class="rule mt-4" aria-hidden="true"></span>
@@ -25,10 +39,12 @@ const regionList = Object.values(regions);
   <section class="section pt-0" aria-labelledby="chef-heading">
     <div class="wrap grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
       <figure class="aspect-[4/5] overflow-hidden">
-        <Image
+        <Picture
           src={img(chef.portrait)}
+          formats={['avif', 'webp']}
           widths={WIDTHS}
-          sizes="(min-width: 64rem) 40vw, 100vw"
+          quality={50}
+          sizes={PORTRAIT_SIZES}
           alt={chef.portraitAlt}
           loading="eager"
           fetchpriority="high"

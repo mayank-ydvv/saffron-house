@@ -1,11 +1,11 @@
 [
-  { "image": "gallery-01.jpg", "alt": "Saffron threads scattered across a dark slate board beside a brass spoon" },
-  { "image": "gallery-02.jpg", "alt": "A chef’s hands pressing galouti kebabs onto a hot iron tawa" },
-  { "image": "gallery-03.jpg", "alt": "Steam rising from a copper handi of biryani as the dough seal is broken" },
-  { "image": "gallery-04.jpg", "alt": "Candlelit dining room with dark wood tables and brass lamps" },
-  { "image": "gallery-05.jpg", "alt": "Pepper crab plated on a black stone dish with curry leaves" },
-  { "image": "gallery-06.jpg", "alt": "Whole spices roasting in a heavy iron kadai" },
-  { "image": "gallery-07.jpg", "alt": "A bartender stirring a saffron old fashioned over a single clear ice cube" },
-  { "image": "gallery-08.jpg", "alt": "Saffron kulfi on a clay plate with slivered pistachio" },
-  { "image": "gallery-09.jpg", "alt": "Brass thalis and copper vessels stacked on an open kitchen shelf" }
+  {"image": "gallery-01.jpg", "alt": "A spoonful of ground spice falling through a beam of light onto a dark surface"},
+  {"image": "gallery-02.jpg", "alt": "Tandoori chicken with smoke rising, served with green chutney and salad"},
+  {"image": "gallery-03.jpg", "alt": "Biryani in a black pan seen from above, topped with golden paneer and crisp onions"},
+  {"image": "gallery-04.jpg", "alt": "A dining room set for dinner, glasses and folded napkins in low, warm light"},
+  {"image": "gallery-05.jpg", "alt": "Hands holding a clay bowl of spiced lentils on a dark stone table"},
+  {"image": "gallery-06.jpg", "alt": "Dried chillies, garlic, cinnamon and ground spices on a wooden board"},
+  {"image": "gallery-07.jpg", "alt": "A smoked old fashioned, the smoke curling up from under a glass cloche"},
+  {"image": "gallery-08.jpg", "alt": "Pistachio ice cream beside a chocolate-filled pastry on dark slate"},
+  {"image": "gallery-09.jpg", "alt": "Two copper kettles on an old stove, softly lit from the side"}
 ]

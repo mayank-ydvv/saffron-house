@@ -31,6 +31,7 @@ function validate() {
     if (item.diet.includes('vegan') && !item.diet.includes('veg')) errors.push(`menu: ${item.id} is vegan but not veg`);
     if (item.image && !hasImage(item.image)) errors.push(`menu: ${item.id} image "${item.image}" missing`);
     if (item.chefPick && !item.image) errors.push(`menu: chef's pick ${item.id} needs an image`);
+    if (item.image && !item.imageAlt) errors.push(`menu: ${item.id} image needs imageAlt`);
   }
   for (const [key, region] of Object.entries(regions)) {
     if (region.id !== key) errors.push(`regions: key "${key}" does not match id "${region.id}"`);

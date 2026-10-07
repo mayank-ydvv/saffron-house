@@ -34,7 +34,7 @@ const firstSentence = (text: string) => text.split(/(?<=\.)\s/)[0];
                     src={img(dish.image!)}
                     widths={[480, 960]}
                     sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 44vw, 78vw"
-                    alt={`${dish.name}, plated`}
+                    alt={dish.imageAlt!}
                     loading="lazy"
                     decoding="async"
                     class="h-full w-full object-cover"

@@ -4,7 +4,7 @@ export const content = {
     headline: 'A royal table, reimagined.',
     subtext: 'Seven courses from the royal kitchens of India. Forty seats in Nungambakkam.',
     image: 'hero-poster.jpg',
-    alt: 'A dark, candlelit table set with brass and copperware, steam rising from a single plate',
+    alt: 'A hammered copper pot and fresh tomatoes on a wooden board in a dim, warm room',
   },
 
   philosophy: {
@@ -15,7 +15,7 @@ export const content = {
       'Each is served as a seven-course tasting journey in a forty-cover dining room in Nungambakkam, Chennai. Nothing is rushed. Spices are ground each afternoon. The tandoor is lit at four.',
     ],
     image: 'philosophy.jpg',
-    alt: 'A cook’s hands folding saffron threads into warm milk in a small brass bowl',
+    alt: 'Hands in low light scattering a careful pinch of seasoning over a small dish',
   },
 
   signature: {
@@ -45,9 +45,9 @@ export const content = {
       'Saffron House is the table he always wanted to set. Rigorous about origin, quiet about technique, generous at the pass.',
     ],
     image: 'chef.jpg',
-    alt: 'Chef Arjun Rao at the pass, lit by a single warm lamp, plating a course',
+    alt: 'A chef plating at the pass of a dim, warmly lit open kitchen',
     portrait: 'chef-portrait.jpg',
-    portraitAlt: 'Portrait of Chef Arjun Rao in a dark apron, arms folded, in the kitchen',
+    portraitAlt: 'A chef in a dark jacket clapping a cloud of flour from their hands',
   },
 
   gallery: {
@@ -91,7 +91,7 @@ export const content = {
       },
     ],
     kitchenImage: 'kitchen.jpg',
-    kitchenAlt: 'The open kitchen at service, cooks working over charcoal grills and copper pans',
+    kitchenAlt: 'A chef working over a tall flame at the grill in a warmly lit kitchen',
     sourcing: {
       title: 'Where it comes from.',
       intro: 'We work with a small circle of growers, foragers and fishing families. Most we have visited. All we know by name.',
@@ -104,7 +104,7 @@ export const content = {
         { what: 'Dairy', from: 'Nandi Hills Farm, Karnataka' },
       ],
       image: 'spices.jpg',
-      alt: 'Burlap sacks of whole spices — cardamom, pepper and dried chilli — in a dim storeroom',
+      alt: 'Open sacks of grain and ground spice in a dim storeroom, lit by a single warm lamp',
     },
   },
 

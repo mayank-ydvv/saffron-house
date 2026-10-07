@@ -1,7 +1,8 @@
 # Images
 
-The site ships with **generated placeholders** (warm gradients at the correct aspect ratio), so layout never shifts
-when real photography is added. To replace one, save a photo with the **same filename** in `src/assets/images/`.
+Photography is from Unsplash (free Unsplash License); credits are below and in `src/data/credits.json`.
+Missing files fall back to **generated placeholders** at the correct aspect ratio. To replace a photo, save one with the
+**same filename** in `src/assets/images/` and update its entry in `src/data/credits.json`.
 Astro re-encodes it to AVIF/WebP at 480/960/1600 widths at build time.
 
 Art direction: dark, low-key and warm. Close-up plating, hands, steam, brass and copperware. Avoid bright backgrounds.
@@ -42,5 +43,24 @@ Add `public/video/hero.mp4` (H.264) and `public/video/hero.webm` (VP9), 8–10 s
 
 ## Credits
 
-Add the photographer and source for each photo here and in README.md, for example:
-`hero-poster.jpg` — Photo by NAME on Unsplash (link).
+- `chef-portrait.jpg`: photo by Venti Views on [Unsplash](https://unsplash.com/photos/a-man-in-a-chefs-uniform-is-sprinkled-with-flour-XHGTrx2clAs)
+- `chef.jpg`: photo by Muhammad Rahiman Abdulmanab on [Unsplash](https://unsplash.com/photos/chef-preparing-food-in-a-dimly-lit-kitchen-sthiQQhmljg)
+- `gallery-01.jpg`: photo by Hsu-Han on [Unsplash](https://unsplash.com/photos/spoonful-of-brown-powder-falling-onto-a-dark-surface-xJuSFSxf4Qk)
+- `gallery-02.jpg`: photo by MuiZur on [Unsplash](https://unsplash.com/photos/a-plate-of-food-on-a-table-with-a-bowl-of-sauce-SE5G9kHF25Q)
+- `gallery-03.jpg`: photo by brahmediting on [Unsplash](https://unsplash.com/photos/a-pan-filled-with-food-on-top-of-a-table-VqEE8NtXn7Y)
+- `gallery-04.jpg`: photo by Alfonso Betancourt on [Unsplash](https://unsplash.com/photos/a-long-table-is-set-with-empty-wine-glasses-SL3MyCeoFwE)
+- `gallery-05.jpg`: photo by Büşra İnce on [Unsplash](https://unsplash.com/photos/a-person-holding-a-bowl-of-food-on-a-table-aGNmX84U-2s)
+- `gallery-06.jpg`: photo by Zahrin Lukman on [Unsplash](https://unsplash.com/photos/sliced-food-additives-on-brown-cutting-board-VSNoQdimlQQ)
+- `gallery-07.jpg`: photo by Pinaak Kumar on [Unsplash](https://unsplash.com/photos/a-glass-filled-with-liquid-sitting-on-top-of-a-table-lVMkSj9oxkU)
+- `gallery-08.jpg`: photo by Jon Handley on [Unsplash](https://unsplash.com/photos/a-plate-with-food-on-it-AjjQsOrSUMA)
+- `gallery-09.jpg`: photo by Md Mahdi on [Unsplash](https://unsplash.com/photos/two-brass-teapot-HuEOGGXpXHs)
+- `galouti.jpg`: photo by German Krupenin on [Unsplash](https://unsplash.com/photos/a-close-up-of-meat-on-a-grill-with-tongs-m0DfO0h4sE4)
+- `gucchi-pulao.jpg`: photo by Hrushi Chavhan on [Unsplash](https://unsplash.com/photos/a-person-is-spooning-food-out-of-a-bowl-DROPNgCSqNI)
+- `hero-poster.jpg`: photo by morteza kholghi on [Unsplash](https://unsplash.com/photos/shallow-focus-photo-of-brown-cook-pot-PaDNumqT8Dw)
+- `kitchen.jpg`: photo by Izzedine Elfatih on [Unsplash](https://unsplash.com/photos/a-chef-cooks-with-large-flames-on-a-grill-caoZkadO688)
+- `nihari.jpg`: photo by Ethan Smith on [Unsplash](https://unsplash.com/photos/a-plate-of-food-on-a-wooden-table-3B_Vlmcd-dY)
+- `pepper-crab.jpg`: photo by Mae Mu on [Unsplash](https://unsplash.com/photos/a-plate-of-cooked-crabs-on-a-table-IHFa5s6xaRE)
+- `philosophy.jpg`: photo by Gastro Editorial on [Unsplash](https://unsplash.com/photos/a-man-in-a-black-shirt-is-sprinkling-noodles-uAEla_0RCgU)
+- `prawn-curry.jpg`: photo by CHUTTERSNAP on [Unsplash](https://unsplash.com/photos/shrimps-with-cream-in-bowl--ps36yg89Lg)
+- `rogan-josh.jpg`: photo by VK bro on [Unsplash](https://unsplash.com/photos/skewed-meat-in-bowl-beside-knife-and-fork-al9eh9QkdPA)
+- `spices.jpg`: photo by Giri on [Unsplash](https://unsplash.com/photos/sacks-of-grain-in-a-dimly-lit-storage-area-05XWRj91krc)

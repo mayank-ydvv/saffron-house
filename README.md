@@ -89,14 +89,16 @@ saffron-house/
 
 These are measured on the production build (gzipped):
 
-| Page | JS | CSS (inlined) | Lighthouse mobile (Perf / A11y / BP / SEO) |
-|---|---|---|---|
-| Home | 6.1 KB initial + 44 KB GSAP after `load` | ~9 KB | 100 / 100 / 100 / 100 |
-| Menu | 2.9 KB | ~9 KB | 100 / 100 / 100 / 100 |
-| Reserve | 3.5 KB | ~9 KB | 100 / 100 / 100 / 100 |
-| About | 1.6 KB | ~9 KB | 100 / 100 / 100 / 100 |
+| Page | JS | CSS (inlined) | Lighthouse mobile (Perf / A11y / BP / SEO) | LCP (slow 4G, real throttling) |
+|---|---|---|---|---|
+| Home | 6.1 KB initial + 44 KB GSAP after `load` | ~9 KB | 99–100 / 100 / 100 / 100 | 1.5 s |
+| Menu | 2.9 KB | ~9 KB | 99–100 / 100 / 100 / 100 | 1.7 s |
+| Reserve | 3.5 KB | ~9 KB | 100 / 100 / 100 / 100 | 0.8 s |
+| About | 1.6 KB | ~9 KB | 98 / 100 / 100 / 100 | 2.1 s |
 
-CLS is at most 0.001 on every page. Metric-matched fallback fonts (`size-adjust` / `ascent-override`) keep the web-font swap from moving text. The scores were measured with placeholder images, so re-run Lighthouse after adding photography.
+These were measured with the real photography. LCP images (the hero poster and the About portrait) are AVIF, and each is preloaded with exactly the `srcset` its `<picture>` uses.
+
+CLS is at most 0.001 on every page. Metric-matched fallback fonts (`size-adjust` / `ascent-override`) keep the web-font swap from moving text.
 
 ### Algorithmic choices
 
@@ -122,11 +124,11 @@ CLS is at most 0.001 on every page. Metric-matched fallback fonts (`size-adjust`
 
 ## Images & credits
 
-Photography is not included. The site ships with generated gradient placeholders at the correct aspect ratios, so the layout never shifts. `IMAGES.md` lists every file with its size, ratio and Unsplash/Pexels search terms. Drop a photo into `src/assets/images/` under the same filename and rebuild.
+All photography is from [Unsplash](https://unsplash.com), used under the free [Unsplash License](https://unsplash.com/license) (paid Unsplash+ images excluded). Each photographer is credited in [IMAGES.md](IMAGES.md), generated from `src/data/credits.json`.
 
-| File | Credit |
-|---|---|
-| _e.g._ `hero-poster.jpg` | Photo by NAME on Unsplash (link) |
+Thanks to Venti Views, Muhammad Rahiman Abdulmanab, Hsu-Han, MuiZur, brahmediting, Alfonso Betancourt, Büşra İnce, Zahrin Lukman, Pinaak Kumar, Jon Handley, Md Mahdi, German Krupenin, Hrushi Chavhan, morteza kholghi, Izzedine Elfatih, Ethan Smith, Mae Mu, Gastro Editorial, CHUTTERSNAP, VK bro and Giri.
+
+The photos illustrate a fictional restaurant. They don't depict the actual dishes, kitchen or "Chef Arjun Rao", and the alt text describes what each photo really shows. To swap one, replace the file in `src/assets/images/` (same name, same aspect ratio) and update `src/data/credits.json`. `npm run assets` recreates placeholders for any missing files and rewrites IMAGES.md.
 
 Icons: [Lucide](https://lucide.dev) (ISC). Fonts: Cormorant Garamond and Inter via [Fontsource](https://fontsource.org) (OFL). Map: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
 
