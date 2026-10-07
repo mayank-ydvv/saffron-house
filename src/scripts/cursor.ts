@@ -49,3 +49,5 @@ if (enabled) {
   });
   document.documentElement.addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
 }
+
+export {};

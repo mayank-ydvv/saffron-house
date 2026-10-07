@@ -59,3 +59,5 @@ if (sections.length) {
   );
   for (const section of sections) observer.observe(section);
 }
+
+export {};

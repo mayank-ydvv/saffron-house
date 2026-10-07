@@ -26,7 +26,9 @@ const {
 
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Indian fine dining in Chennai`;
 const siteUrl = Astro.site ?? new URL(site.url);
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', siteUrl).href;
+// Build output is file-based (menu.html) but served clean (/menu) by Vercel's cleanUrls.
+const cleanPath = Astro.url.pathname.replace(/(index)?\.html$/, '').replace(/\/$/, '') || '/';
+const canonical = new URL(cleanPath, siteUrl).href;
 const ogUrl = new URL(ogImage, siteUrl).href;
 
 const jsonLd = {

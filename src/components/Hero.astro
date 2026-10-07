@@ -96,11 +96,11 @@ const words = hero.headline.split(' ');
     }
     .hero-word {
       animation: hero-rise 1.1s var(--ease-out-expo) both;
-      animation-delay: calc(250ms + var(--i) * 80ms);
+      animation-delay: calc(100ms + var(--i) * 80ms);
     }
     .hero-fade {
       animation: hero-fade 1s var(--ease-out-expo) both;
-      animation-delay: calc(250ms + var(--i) * 80ms);
+      animation-delay: calc(100ms + var(--i) * 80ms);
     }
   }
   @keyframes hero-zoom {
@@ -111,10 +111,10 @@ const words = hero.headline.split(' ');
       transform: scale(1.08);
     }
   }
+  /* Transform only: the overflow mask hides each word, and the headline (often the LCP) paints on frame one. */
   @keyframes hero-rise {
     from {
       transform: translateY(105%);
-      opacity: 0;
     }
   }
   @keyframes hero-fade {

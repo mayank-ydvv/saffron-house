@@ -7,7 +7,8 @@ export default defineConfig({
   site: 'https://saffron-house.vercel.app',
   output: 'static',
   trailingSlash: 'never',
-  build: { format: 'file' },
+  // ~9 KB of CSS per page: inlining it saves a render-blocking round trip on mobile.
+  build: { format: 'file', inlineStylesheets: 'always' },
   integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
   vite: { plugins: [tailwindcss()] },
 });

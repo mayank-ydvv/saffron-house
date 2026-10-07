@@ -57,3 +57,5 @@ if (root) {
   if (!reduced) toggle.hidden = false;
   sync();
 }
+
+export {};

@@ -64,3 +64,5 @@ if (video && toggle && shouldLoad()) {
   if (document.readyState === 'complete') start(video, toggle);
   else addEventListener('load', () => start(video, toggle), { once: true });
 }
+
+export {};

@@ -17,3 +17,5 @@ if (targets.length && matchMedia('(prefers-reduced-motion: no-preference)').matc
   );
   for (const el of targets) observer.observe(el);
 }
+
+export {};

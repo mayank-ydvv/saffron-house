@@ -53,3 +53,5 @@ if (grid && dialog) {
     opener?.focus();
   });
 }
+
+export {};

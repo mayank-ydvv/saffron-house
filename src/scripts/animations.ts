@@ -60,7 +60,7 @@ async function init() {
     viewport.classList.add('is-pinned');
     // Measured on refresh only (load/resize), never per frame.
     const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-    gsap.to(track, {
+    const tween = gsap.to(track, {
       x: () => -distance(),
       ease: 'none',
       scrollTrigger: {
@@ -73,7 +73,19 @@ async function init() {
         onToggle: (self) => willChange(track, self.isActive),
       },
     });
-    return () => viewport.classList.remove('is-pinned');
+    // Keyboard users: tabbing to an off-screen card scrolls the page to where that card is in view.
+    const onFocus = (event: FocusEvent) => {
+      const card = (event.target as Element).closest<HTMLElement>('li');
+      const st = tween.scrollTrigger;
+      if (!card || !st) return;
+      const progress = Math.min(1, card.offsetLeft / Math.max(1, distance()));
+      window.scrollTo({ top: st.start + progress * (st.end - st.start), behavior: 'instant' });
+    };
+    track.addEventListener('focusin', onFocus);
+    return () => {
+      track.removeEventListener('focusin', onFocus);
+      viewport.classList.remove('is-pinned');
+    };
   });
 
   // Web fonts change text metrics; re-measure once they're in.
@@ -89,3 +101,5 @@ if (matchMedia(MOTION).matches) {
   if (document.readyState === 'complete') schedule();
   else addEventListener('load', schedule, { once: true });
 }
+
+export {};

@@ -30,3 +30,5 @@ if (form) {
     form.reset();
   });
 }
+
+export {};

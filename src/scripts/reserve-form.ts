@@ -125,7 +125,7 @@ if (form) {
   });
   // Dates and times are checked immediately: native date pickers can't disable weekdays.
   form.addEventListener('change', (e) => {
-    const el = e.target as HTMLInputElement;
+    const el = e.target as HTMLElement;
     if (el === date) {
       validate(date);
       if (time.value) validate(time);
